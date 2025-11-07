@@ -1,0 +1,52 @@
+{
+  "family": "housing-streamlit",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::296062591402:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::296062591402:role/ecs_s3_access",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "housing-streamlit",
+      "image": "296062591402.dkr.ecr.eu-west-2.amazonaws.com/housing-streamlit:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8501,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "STREAMLIT_SERVER_PORT",
+          "value": "8501"
+        },
+        {
+          "name": "STREAMLIT_SERVER_ADDRESS",
+          "value": "0.0.0.0"
+        },
+        {
+          "name": "STREAMLIT_SERVER_BASEURLPATH",
+          "value": "/"
+        },
+        {
+          "name": "STREAMLIT_BROWSER_GATHERUSAGESTATS",
+          "value": "false"
+        },
+        {
+          "name": "API_URL",
+          "value": "http://housing-api-alb-945997111.eu-west-2.elb.amazonaws.com/predict"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "eu-west-2"
+        },
+        {
+          "name": "S3_BUCKET_NAME",
+          "value": "housing-data-regression-cc"
+        }
+      ]
+    }
+  ]
+}
